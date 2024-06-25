@@ -23,7 +23,7 @@ class Database:
         fetch: bool = False,
         fetchval: bool = False,
         fetchrow: bool = False,
-        execute: bool = True,
+        execute: bool = False,
     ):
         async with self.pool.acquire() as connection:
             connection: Connection
@@ -38,17 +38,17 @@ class Database:
                     result = await connection.execute(command, *args)
             return result
 
-    # async def create_table_users(self):
-    #     sql = """
-    #     CREATE TABLE IF NOT EXISTS products_user (
-    #     id SERIAL PRIMARY KEY,
-    #     full_name VARCHAR(255) NOT NULL,
-    #     username varchar(255) NULL,
-    #     telegram_id BIGINT NOT NULL UNIQUE,
-    #     phone_number VARCHAR(20) NULL
-    #     );
-    #     """
-    #     await self.execute(sql, execute=True)
+    async def create_table_users(self):
+        sql = """
+        CREATE TABLE IF NOT EXISTS products_user (
+        id SERIAL PRIMARY KEY,
+        full_name VARCHAR(255) NOT NULL,
+        username varchar(255) NULL,
+        telegram_id BIGINT NOT NULL UNIQUE,
+        phone_number VARCHAR(20) NULL
+        );
+        """
+        await self.execute(sql, execute=True)
 
     @staticmethod
     def format_args(sql, parameters: dict):
