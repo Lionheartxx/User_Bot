@@ -1,11 +1,8 @@
 from typing import Union
-
 import asyncpg
 from asyncpg import Connection
 from asyncpg.pool import Pool
-
 from data import config
-
 
 class Database:
     def __init__(self):
@@ -26,7 +23,7 @@ class Database:
         fetch: bool = False,
         fetchval: bool = False,
         fetchrow: bool = False,
-        execute: bool = False,
+        execute: bool = True,
     ):
         async with self.pool.acquire() as connection:
             connection: Connection
